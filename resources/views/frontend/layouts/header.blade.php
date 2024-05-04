@@ -83,10 +83,10 @@
                     </div>
                 </div>
                 <figure class="mb-0 mx-auto">
-                    <a href="{{ url('/') }}">
-                        <img src="{{ asset($settings['site_logo']) }}" alt="" class="img-fluid logo">
-                    </a>
-                </figure>
+        <a href="{{ url('/') }}">
+            <img src="{{ isset($settings['site_logo']) ? asset($settings['site_logo']) : 'path_to_default_logo_image' }}" alt="" class="img-fluid logo">
+        </a>
+    </figure>
 
                 <div class="collapse navbar-collapse justify-content-between" id="main_nav99">
                     <ul class="navbar-nav ml-auto ">

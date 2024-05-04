@@ -9,20 +9,28 @@ function formatTags($tags):String{
 
 //get selected language from section
 
-function getLanguage() : string {
-    if(session()->has('language')){
+function getLanguage(): string {
+    if (session()->has('language')) {
         return session('language');
-    } else{
-        try{
-            $language = Language::where('default',1)->first();
-            setLanguage($language->lang);
-            return $language->lang;
-        }catch(\Throwable $th){
+    } else {
+        try {
+            $language = Language::where('default', 1)->first();
+            if ($language) {
+                setLanguage($language->lang);
+                return $language->lang;
+            } else {
+                // Handle case where default language is not found
+                setLanguage('en');
+                return 'en'; // Assuming 'en' is the default language code
+            }
+        } catch (\Throwable $th) {
+            // Handle any exceptions that occur during the query
             setLanguage('en');
-            return $language->lang;
+            return 'en';
         }
     }
 }
+
 
 //set language code in section
 
