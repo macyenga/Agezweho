@@ -57,3 +57,14 @@ Route::get('contact', [HomeController::class, 'contact'])->name('contact');
 
 // Contact Page Route
 Route::post('contact', [HomeController::class, 'handleContactFrom'])->name('contact.submit');
+
+Route::post('/cookie-consent', [CookieConsentController::class, 'store']);
+
+Route::get('/privacy-policy', function () {
+    return view('privacy-policy');
+});
+
+// Terms and Conditions Page Route
+Route::get('terms-and-conditions', function () {
+    return view('terms-and-conditions');
+})->name('terms-and-conditions');

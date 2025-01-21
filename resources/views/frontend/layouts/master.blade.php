@@ -5,6 +5,24 @@
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}" />
     <title>{{ config('app.name') }}</title>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-MMMRY6PLJW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MMMRY6PLJW');
+</script>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1257502818810103"
+     crossorigin="anonymous"></script>
+     <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "pu37b6g88s");
+</script>
     <meta name="description" content="@hasSection('meta_description') @yield('meta_description') @else @isset($settings['site_seo_description']) {{ $settings['site_seo_description'] }} @endisset @endif" />
 <meta name="keywords" content="@isset($settings['site_seo_keywords']) {{ $settings['site_seo_keywords'] }} @endisset" />
 
@@ -57,6 +75,13 @@
     @include('frontend.layouts.footer')
 
     {{-- End Footer Section --}}
+
+    <footer>
+        <div class="footer-terms" style="text-align: center; padding: 20px; background-color: #f8f9fa; border-top: 1px solid #e7e7e7;">
+            <a href="{{ url('/terms') }}" style="color: #007bff; text-decoration: none; margin-right: 15px;">Terms of Service</a> | 
+            <a href="{{ url('/privacy') }}" style="color: #007bff; text-decoration: none; margin-left: 15px;">Privacy Policy</a>
+        </div>
+    </footer>
 
     <a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up"></i></a>
 
@@ -149,6 +174,46 @@
     </script>
     
     @stack('content')
+    <script src="{{ mix('js/app.js') }}"></script>
+
+<!-- Cookie Consent -->
+<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.0/build/cookieconsent.min.js"></script>
+<script>
+import cookieconsent from 'cookieconsent';
+
+window.addEventListener('load', function () {
+    cookieconsent.initialise({
+        palette: {
+            popup: {
+                background: "#000",
+                text: "#fff"
+            },
+            button: {
+                background: "#f1d600",
+                text: "#000"
+            }
+        },
+        position: "bottom", // Moves the banner to the bottom
+        theme: "classic",
+        content: {
+            message: "We use cookies to ensure you get the best experience on our website.",
+            dismiss: "Got it!",
+            link: "Learn more",
+            href: "/privacy-policy",
+            // Add terms and conditions link
+            extra_link: {
+                text: "Terms and Conditions",
+                href: "/terms-and-conditions"
+            }
+        }
+    });
+});
+
+</script>
+
+</body>
+</html>
+
 </body>
 
 </html>

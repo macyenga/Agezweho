@@ -1,3 +1,143 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* General navigation styles */
+ul.topbar-link {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+/* Links in the navigation */
+ul.topbar-link .nav-item {
+    margin-left: 15px;
+}
+
+ul.topbar-link .nav-link {
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+    transition: color 0.3s, border-bottom 0.3s;
+    text-decoration: none;
+    position: relative;
+    padding: 5px 0;
+}
+
+/* Add hover effect */
+ul.topbar-link .nav-link:hover {
+    color: #007bff;
+    text-decoration: none;
+}
+
+/* Fancy underline animation for links */
+ul.topbar-link .nav-link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background-color: #007bff;
+    transform: scaleX(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+ul.topbar-link .nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+/* Highlight Register link differently */
+ul.topbar-link .register-link {
+    color: #28a745; /* Green for Register */
+}
+
+ul.topbar-link .register-link:hover {
+    color: #218838;
+}
+
+ul.topbar-link .register-link::after {
+    background-color: #28a745;
+}
+/* Make navbar items flexible and wrap */
+.navbar-nav {
+    display: flex;
+    flex-wrap: wrap; /* Ensure the items wrap to next line */
+    justify-content: flex-start;
+}
+
+/* Adjust nav-item spacing */
+.navbar-nav .nav-item {
+    margin: 5px 10px;
+    white-space: nowrap;
+}
+
+/* Ensure dropdown menu fits into the view */
+.navbar-nav .dropdown-menu {
+    min-width: 150px; /* Adjust the width of the dropdown */
+}
+
+/* Navbar links */
+.navbar-nav .nav-link {
+    padding: 10px 15px;
+    font-size: 14px; /* Make text smaller to fit more categories */
+}
+
+/* Hide search bar when collapsed */
+.top-search {
+    display: none;
+}
+
+/* Adjust the search bar toggle for mobile */
+.navbar-nav .search {
+    display: block;
+}
+
+/* Make the search bar visible when active */
+.top-search.collapse.show {
+    display: block;
+}
+.navbar-nav {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.navbar-nav::-webkit-scrollbar {
+    display: none; /* Hide scrollbar */
+}
+.nav-link.active {
+    font-weight: bold;
+    border-bottom: 2px solid #007bff;
+}
+.navbar-nav .nav-item .nav-link {
+    padding: 10px 15px;
+    font-size: 16px;
+    color: #333;
+    transition: color 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-item .nav-link:hover {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.dropdown-menu {
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.dropdown-menu .dropdown-item {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #555;
+    transition: background 0.3s ease-in-out;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+}

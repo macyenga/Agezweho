@@ -71,6 +71,19 @@ return  [
             ],
         ],
     ],
+    "ki" => [
+        "name" => "Rwanda",
+        "nativeName" => "kinyarwanda",
+        "dir" => "ltr",
+        "translations" => [
+            [
+                "name" => "English",
+                "nativeName" => "English",
+                "dir" => "ltr",
+                "code" => "en",
+            ],
+        ],
+    ],
     "cs" => [
         "name" => "Czech",
         "nativeName" => "Čeština",

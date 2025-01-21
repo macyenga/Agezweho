@@ -38,32 +38,37 @@
                             </select>
                         </div>
 
-                        <ul class="topbar-link ml-auto">
-                            @if (!auth()->check())
-                            <li><a href="{{ route('login') }}">{{ __('frontend.Login') }}</a></li>
-                            <li><a href="{{ route('register') }}">{{ __('frontend.Register') }}</a></li>
-                            @else
-                            <li class="dropdown"><a href="#" data-toggle="dropdown"
-                                    class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                                    <div class="d-sm-none d-lg-inline-block">{{ __('admin.Hi') }}, {{ Auth::user()->name }}
-                                    </div>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <!-- Authentication -->
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <a href="#"
-                                            onclick="event.preventDefault();
-                                        this.closest('form').submit();"
-                                        href="{{ route('register') }}"
-                                            class="dropdown-item has-icon text-danger">
-                                            <i class="fas fa-sign-out-alt"></i> {{ __('frontend.Logout') }}
-                                        </a>
-                                    </form>
-                                </div>
-                            </li>
-                            @endif
-                        </ul>
+                        <ul class="topbar-link d-flex align-items-center ml-auto">
+    @if (!auth()->check())
+        <!-- Login Link -->
+        <li class="nav-item">
+            <a href="{{ route('login') }}" class="nav-link fancy-link">{{ __('frontend.Login') }}</a>
+        </li>
+        <!-- Register Link -->
+        <li class="nav-item">
+            <a href="{{ route('register') }}" class="nav-link fancy-link register-link">{{ __('frontend.Register') }}</a>
+        </li>
+    @else
+        <!-- Logged-in User Dropdown -->
+        <li class="dropdown nav-item">
+            <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                <div class="d-sm-none d-lg-inline-block">{{ __('admin.Hi') }}, {{ Auth::user()->name }}</div>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <!-- Logout -->
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <a href="#"
+                        onclick="event.preventDefault(); this.closest('form').submit();"
+                        class="dropdown-item has-icon text-danger">
+                        <i class="fas fa-sign-out-alt"></i> {{ __('frontend.Logout') }}
+                    </a>
+                </form>
+            </div>
+        </li>
+    @endif
+</ul>
+
                     </div>
                 </div>
             </div>
@@ -73,83 +78,73 @@
 
 
     <!-- Navbar  -->
-    <!-- Navbar menu  -->
-    <div class="navigation-wrap navigation-shadow bg-white">
-        <nav class="navbar navbar-hover navbar-expand-lg navbar-soft">
-            <div class="container">
-                <div class="offcanvas-header">
-                    <div data-toggle="modal" data-target="#modal_aside_right" class="btn-md">
-                        <span class="navbar-toggler-icon"></span>
-                    </div>
+    <!-- Navbar menu -->
+<div class="navigation-wrap navigation-shadow bg-white">
+    <nav class="navbar navbar-hover navbar-expand-lg navbar-soft">
+        <div class="container">
+            <div class="offcanvas-header">
+                <div data-toggle="modal" data-target="#modal_aside_right" class="btn-md">
+                    <span class="navbar-toggler-icon"></span>
                 </div>
-                <figure class="mb-0 mx-auto">
-        <a href="{{ url('/') }}">
-            <img src="{{ isset($settings['site_logo']) ? asset($settings['site_logo']) : 'path_to_default_logo_image' }}" alt="" class="img-fluid logo">
-        </a>
-    </figure>
+            </div>
+            <figure class="mb-0 mx-auto">
+                <a href="{{ url('/') }}">
+                    <img src="{{ isset($settings['site_logo']) ? asset($settings['site_logo']) : 'path_to_default_logo_image' }}" alt="" class="img-fluid logo">
+                </a>
+            </figure>
 
-                <div class="collapse navbar-collapse justify-content-between" id="main_nav99">
-                    <ul class="navbar-nav ml-auto ">
-                        @foreach ($FeaturedCategories as $category)
-                            <li class="nav-item">
-                                <a class="nav-link active" href="{{ route('news', ['category' => $category->slug]) }}">{{ $category->name }}</a>
-                            </li>
-
-                        @endforeach
-
-                        @if (count($categories) > 0)
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown"> {{ __('frontend.More') }} </a>
-                            <ul class="dropdown-menu animate fade-up">
+            <div class="collapse navbar-collapse justify-content-between" id="main_nav99">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">News</a>
+                        <ul class="dropdown-menu animate fade-up">
+                            @foreach ($FeaturedCategories as $category)
+                                <li><a class="dropdown-item icon-arrow" href="{{ route('news', ['category' => $category->slug]) }}">{{ $category->name }}</a></li>
+                            @endforeach
+                            @if (count($categories) > 0)
                                 @foreach ($categories as $category)
-                                <li><a class="dropdown-item icon-arrow" href="{{ route('news', ['category' => $category->slug]) }}"> {{ $category->name }}
-                                    </a></li>
+                                    <li><a class="dropdown-item icon-arrow" href="{{ route('news', ['category' => $category->slug]) }}">{{ $category->name }}</a></li>
                                 @endforeach
+                            @endif
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('about') }}">{{ __('frontend.About') }}</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">{{ __('frontend.contact') }}</a></li>
+                </ul>
 
-                            </ul>
-                        </li>
-                        @endif
-                        <li class="nav-item"><a class="nav-link" href="{{ route('about') }}"> {{ __('frontend.About') }} </a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}"> {{ __('frontend.contact') }} </a></li>
+                <!-- Search bar -->
+                <ul class="navbar-nav">
+                    <li class="nav-item search hidden-xs hidden-sm">
+                        <a class="nav-link" href="#">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </li>
+                </ul>
 
-                    </ul>
-
-
-                    <!-- Search bar.// -->
-                    <ul class="navbar-nav ">
-                        <li class="nav-item search hidden-xs hidden-sm "> <a class="nav-link" href="#">
-                                <i class="fa fa-search"></i>
-                            </a>
-                        </li>
-                    </ul>
-
-                    <!-- Search content bar.// -->
-                    <div class="top-search navigation-shadow">
-                        <div class="container">
-                            <div class="input-group ">
-                                <form action="{{ route('news') }}" method="GET">
-
-                                    <div class="row no-gutters mt-3">
-                                        <div class="col">
-                                            <input class="form-control border-secondary border-right-0 rounded-0"
-                                                type="search" value="" placeholder="Search "
-                                                id="example-search-input4" name="search">
-                                        </div>
-                                        <div class="col-auto">
-                                            <button type="submit" class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right"><i class="fa fa-search"></i></button>
-                                        </div>
+                <!-- Search content bar -->
+                <div class="top-search navigation-shadow">
+                    <div class="container">
+                        <div class="input-group">
+                            <form action="{{ route('news') }}" method="GET">
+                                <div class="row no-gutters mt-3">
+                                    <div class="col">
+                                        <input class="form-control border-secondary border-right-0 rounded-0" type="search" placeholder="Search" id="example-search-input4" name="search">
                                     </div>
-
-                                </form>
-                            </div>
+                                    <div class="col-auto">
+                                        <button type="submit" class="btn btn-outline-secondary border-left-0 rounded-0 rounded-right"><i class="fa fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <!-- Search content bar.// -->
-                </div> <!-- navbar-collapse.// -->
+                </div>
+                <!-- End search content bar -->
             </div>
-        </nav>
-    </div>
-    <!-- End Navbar menu  -->
+        </div>
+    </nav>
+</div>
+<!-- End Navbar menu -->
+
 
 
     <!-- Navbar sidebar menu  -->
