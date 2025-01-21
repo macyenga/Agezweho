@@ -67,7 +67,7 @@
 
                     <div class="form-group">
                         <label for="">{{ __('admin.Content') }}</label>
-                        <textarea name="content" class="summernote-simple">{{ $news->content }}</textarea>
+                        <textarea name="content" class="summernote">{{ $news->content }}</textarea>
                         @error('content')
                             <p class="text-danger">{{ $message }}</p>
                         @enderror

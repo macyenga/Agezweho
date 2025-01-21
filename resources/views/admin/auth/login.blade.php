@@ -124,7 +124,7 @@
               Don't have an account? <a href="auth-register.html">Create One</a>
             </div> --}}
                         <div class="simple-footer">
-                            Copyright &copy; Hung Phan 2023
+                            Copyright &copy; novarwa 2025
                         </div>
                     </div>
                 </div>

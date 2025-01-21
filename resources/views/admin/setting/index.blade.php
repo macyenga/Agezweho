@@ -9,7 +9,6 @@
         <div class="card card-primary">
             <div class="card-header">
                 <h4>{{ __('admin.Setting') }}</h4>
-
             </div>
 
             <div class="card-body">
@@ -48,8 +47,6 @@
                     </div>
                   </div>
             </div>
-
-
         </div>
     </section>
 @endsection

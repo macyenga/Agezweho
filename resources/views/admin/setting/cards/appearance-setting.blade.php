@@ -7,7 +7,7 @@
             <div class="form-group">
                 <label>{{ __('admin.Pick Your Color') }}</label>
                 <div class="input-group colorpickerinput">
-                    <input value="{{ $settings['site_color'] }}" name="site_color" type="text" class="form-control">
+                    <input value="{{ $settings['site_color'] ?? '' }}" name="site_color" type="text" class="form-control">
                     <div class="input-group-append">
                         <div class="input-group-text">
                             <i class="fas fa-fill-drip"></i>
