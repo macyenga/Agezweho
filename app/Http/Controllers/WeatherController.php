@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Services\WeatherService;
-use App\Models\Weather;
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class WeatherController extends Controller
 {
@@ -15,15 +16,39 @@ class WeatherController extends Controller
         $this->weatherService = $weatherService;
     }
 
-    public function show($city)
+    public function show(Request $request)
     {
-        $weather = Weather::where('city', $city)->first();
+        try {
+            $city = $request->query('city', config('services.openweather.city', 'Kigali'));
+            
+            $weather = $this->weatherService->getCurrentWeather($city);
+            $forecast = $this->weatherService->getForecast($city);
 
-        if (!$weather || $weather->updated_at->diffInMinutes(now()) > 30) {
-            $data = $this->weatherService->getWeather($city);
-            $weather = Weather::updateOrCreate(['city' => $city], ['data' => json_encode($data)]);
+            return view('weather.show', compact('weather', 'forecast'));
+
+        } catch (Exception $e) {
+            return back()
+                ->withInput()
+                ->with('error', $e->getMessage());
+        }
+    }
+
+    public function api(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'city' => 'required|string|min:2|max:100'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        return view('weather.show', ['weather' => json_decode($weather->data, true)]);
+        try {
+            $city = $request->input('city');
+            $weather = $this->weatherService->getCurrentWeather($city);
+            return response()->json($weather);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 }

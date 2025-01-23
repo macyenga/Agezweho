@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use GuzzleHttp\Client;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -14,7 +15,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton('openweather', function ($app) {
+            return new Client([
+                'base_uri' => 'https://api.openweathermap.org/data/2.5/',
+                'timeout'  => 5.0,
+                'query' => [
+                    'appid' => config('services.openweather.key'),
+                    'units' => 'metric'  // For Celsius
+                ]
+            ]);
+        });
     }
 
     /**
@@ -25,5 +35,13 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Paginator::useBootstrapFour();
+        
+        // Add NoCaptcha class alias
+        $this->app->bind('NoCaptcha', function($app) {
+            return new \Anhskohbo\NoCaptcha\NoCaptcha(
+                config('captcha.secret'), 
+                config('captcha.sitekey')
+            );
+        });
     }
 }

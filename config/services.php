@@ -38,7 +38,7 @@ return [
 
     'openweather' => [
         'key' => env('OPENWEATHERMAP_API_KEY'),
-        'city' => env('OPENWEATHER_CITY', 'Kigali'),
+        'city' => env('OPENWEATHER_DEFAULT_CITY', 'Kigali'),
     ],
 
     'news_api' => [
@@ -52,5 +52,7 @@ return [
         ],
         'attribution_required' => true
     ],
+
+
 
 ];

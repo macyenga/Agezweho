@@ -616,17 +616,20 @@
                                 <h6>
                                     {{ __('frontend.The most important world news and events of the day') }}.
                                 </h6>
-                                <p><small>{{ __('frontend.Get magzrenvi daily newsletter on your inbox') }}.</small>
+                                <p><small>{{ __('Get Agezweho daily newsletter on your inbox') }}.</small>
                                 </p>
-                                <form action="" class="newsletter-form">
-                                    <div class="input-group ">
-                                        <input type="text" class="form-control" name="email"
-                                            placeholder="Your email address">
+                                <form action="{{ route('newsletter.subscribe') }}" method="POST" class="newsletter-form">
+                                    @csrf
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="email" placeholder="Your email address">
                                         <div class="input-group-append">
-                                            <button class="btn btn-primary newsletter-button"
-                                                type="submit">{{ __('frontend.sign up') }}</button>
+                                            {!! NoCaptcha::display() !!}
+                                            <button class="btn btn-primary newsletter-button" type="submit">{{ __('frontend.sign up') }}</button>
                                         </div>
                                     </div>
+                                    @if ($errors->has('g-recaptcha-response'))
+                                        <span class="text-danger">{{ $errors->first('g-recaptcha-response') }}</span>
+                                    @endif
                                 </form>
                             </div>
                         </aside>
@@ -668,3 +671,6 @@
         </div>
     </div>
 </section>
+@push('scripts')
+    {!! NoCaptcha::renderJs() !!}
+@endpush

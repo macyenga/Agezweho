@@ -228,7 +228,7 @@
                                 <h6>
                                     {{ __('frontend.The most important world news and events of the day') }}.
                                 </h6>
-                                <p><small>{{ __('frontend.Get magzrenvi daily newsletter on your inbox') }}.</small></p>
+                                <p><small>{{ __('Get Agezweho daily newsletter on your inbox') }}.</small></p>
                                 <form action="" class="newsletter-form">
                                     <div class="input-group ">
                                         <input type="text" class="form-control" name="email"

@@ -46,12 +46,21 @@
                                     @enderror
                                 </div>
 
+                                <div class="mb-4">
+                                    {!! NoCaptcha::display() !!}
+                                    @if ($errors->has('g-recaptcha-response'))
+                                        <span class="text-red-500 text-sm">{{ $errors->first('g-recaptcha-response') }}</span>
+                                    @endif
+                                </div>
 
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary btn-block"> {{ __('frontend.sign up') }}
                                     </button>
                                 </div>
                             </form>
+                            @push('scripts')
+                                {!! NoCaptcha::renderJs() !!}
+                            @endpush
                         </div>
                     </div>
                 </div>

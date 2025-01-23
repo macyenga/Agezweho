@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WeatherController;
 use App\Http\Controllers\FootballController;
+use App\Http\Controllers\NewsletterController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,7 @@ Route::delete('news-comment-destory',[HomeController::class,'commentDestory'])->
 
 // Newsletter Routes
 Route::post('subscribe-newsletter', [HomeController::class, 'SubscribeNewsLetter'])->name('subscribe-newsletter');
+Route::post('/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
 
 // About Page Route
 Route::get('about', [HomeController::class, 'about'])->name('about');
@@ -77,3 +79,4 @@ Route::post('/form', [FormController::class, 'submitForm'])->name('form.submit')
 Route::get('/weather/{city}', [WeatherController::class, 'show'])->name('weather.show');
 
 Route::get('/live-scores', [FootballController::class, 'liveScores']);
+
