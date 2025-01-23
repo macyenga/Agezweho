@@ -23,7 +23,7 @@
                             @if(isset($weather['main']['temp']))
                                 <p style="margin-bottom: 10px;">
                                     <i class="fas fa-temperature-high" style="margin-right: 10px;"></i>
-                                    Temperature: {{ round($weather['main']['temp'] - 273.15, 1) }}°C
+                                    Temperature: {{ round($weather['main']['temp']) }}°C
                                 </p>
                             @endif
                             @if(isset($weather['weather'][0]['description']))
@@ -38,14 +38,12 @@
             @else
                 <p>Weather information is currently unavailable</p>
                 @if(config('app.debug'))
-                    <small>Debug: $weather variable is {{ isset($weather) ? gettype($weather) : 'not set' }}</small>
+                    <small>Debug: Weather variable is {{ isset($weather) ? json_encode($weather) : 'not set' }}</small>
                 @endif
             @endif
         </div>
     </div>
     <!-- End Weather Information -->
-
-    
 
     <!-- End Hero news Section-->
     @if ($ad && $ad->home_top_bar_ad_status == 1)

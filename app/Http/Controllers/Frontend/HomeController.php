@@ -16,21 +16,37 @@ use App\Models\SocialCount;
 use App\Models\SocialLink;
 use App\Models\Subscriber;
 use App\Models\Tag;
+use App\Services\WeatherService;
 use App\Services\NewsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
+    protected $weatherService;
     protected $newsService;
 
-    public function __construct(NewsService $newsService)
+    public function __construct(WeatherService $weatherService, NewsService $newsService)
     {
+        $this->weatherService = $weatherService;
         $this->newsService = $newsService;
     }
 
-    public function index(){
+    public function index()
+    {
+        try {
+            $city = config('services.openweather.city', 'Kigali');
+            $weather = $this->weatherService->getCurrentWeather($city);
+        } catch (\Exception $e) {
+            Log::error('Weather fetch error', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            $weather = null;
+        }
+
         $breakingNews = News::where([
             'is_breaking_news'=>1
         ])->activeEntries()->withLocalize()->orderBy('id','DESC')->take(10)->get();
@@ -108,6 +124,7 @@ class HomeController extends Controller
         $ad = Ad::first();
 
         return view('frontend.home',compact(
+        'weather',
         'breakingNews',
         'heroSlider',
         'recentNews',

@@ -16,22 +16,69 @@ class WeatherService
 
     public function __construct()
     {
-        $this->client = new Client();
         $this->apiKey = config('services.openweather.key');
-        
-        if (empty($this->apiKey)) {
-            throw new Exception('OpenWeather API key is not configured');
-        }
+        $this->client = new Client([
+            'verify' => false,  // Disable SSL verification
+            'timeout' => 15.0,
+            'connect_timeout' => 15.0,
+            'http_errors' => false, // Prevent Guzzle from throwing exceptions on 4xx/5xx
+            'headers' => [
+                'Accept' => 'application/json',
+                'Content-Type' => 'application/json'
+            ],
+            'defaults' => [
+                'proxy' => []  // Disable proxy
+            ]
+        ]);
     }
 
     public function getCurrentWeather($city)
     {
-        return Cache::remember("weather.current.{$city}", 1800, function () use ($city) {
-            return $this->makeRequest('weather', [
-                'q' => $city,
-                'units' => 'metric'
+        try {
+            // Try to get from cache first
+            $cacheKey = "weather.{$city}";
+            if (Cache::has($cacheKey)) {
+                return Cache::get($cacheKey);
+            }
+
+            $url = "{$this->baseUrl}/weather";
+            $response = $this->client->request('GET', $url, [
+                'query' => [
+                    'q' => $city,
+                    'appid' => $this->apiKey,
+                    'units' => 'metric'
+                ],
+                'proxy' => []  // Explicitly disable proxy for this request
             ]);
-        });
+
+            $statusCode = $response->getStatusCode();
+            if ($statusCode !== 200) {
+                throw new Exception("Weather API returned status code: {$statusCode}");
+            }
+
+            $data = json_decode($response->getBody()->getContents(), true);
+            if (!$data) {
+                throw new Exception('Failed to decode weather data');
+            }
+
+            // Cache successful response
+            Cache::put($cacheKey, $data, now()->addMinutes(30));
+            
+            return $data;
+
+        } catch (Exception $e) {
+            Log::error('Weather API error:', [
+                'message' => $e->getMessage(),
+                'city' => $city
+            ]);
+            
+            // Return cached data if available
+            if (Cache::has($cacheKey)) {
+                return Cache::get($cacheKey);
+            }
+            
+            throw $e;
+        }
     }
 
     public function getForecast($city)
@@ -48,6 +95,11 @@ class WeatherService
     {
         if (empty($params['q'])) {
             throw new Exception('City parameter is required');
+        }
+
+        if (empty($this->apiKey)) {
+            Log::error('OpenWeather API key is not configured');
+            throw new Exception('Weather service configuration error');
         }
 
         try {

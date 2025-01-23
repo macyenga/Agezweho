@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('openweather', function ($app) {
             return new Client([
                 'base_uri' => 'https://api.openweathermap.org/data/2.5/',
-                'timeout'  => 5.0,
+                'timeout'  => 20.0, // Increase timeout to 20 seconds
                 'query' => [
                     'appid' => config('services.openweather.key'),
                     'units' => 'metric'  // For Celsius
