@@ -16,13 +16,19 @@ use App\Models\SocialCount;
 use App\Models\SocialLink;
 use App\Models\Subscriber;
 use App\Models\Tag;
+use App\Services\NewsService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
+    protected $newsService;
 
+    public function __construct(NewsService $newsService)
+    {
+        $this->newsService = $newsService;
+    }
 
     public function index(){
         $breakingNews = News::where([

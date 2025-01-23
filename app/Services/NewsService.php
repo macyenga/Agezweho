@@ -190,5 +190,23 @@ class NewsService
         });
     }
 
-    // ...existing code...
+    public function getPopularNews()
+    {
+        return News::orderBy('views', 'desc')->take(5)->get();
+    }
+
+    public function getCategorySectionOneNews()
+    {
+        return News::where('category_id', 1)->orderBy('created_at', 'desc')->take(5)->get();
+    }
+
+    public function getCategorySectionTwoNews()
+    {
+        return News::where('category_id', 2)->orderBy('created_at', 'desc')->take(5)->get();
+    }
+
+    public function getCategorySectionThreeNews()
+    {
+        return News::where('category_id', 3)->orderBy('created_at', 'desc')->take(5)->get();
+    }
 }

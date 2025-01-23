@@ -49,7 +49,7 @@
     <!-- /END GA -->
 </head>
 
-<body>zz
+<body>
     <div id="app">
         <section class="section">
             <div class="container mt-5">
