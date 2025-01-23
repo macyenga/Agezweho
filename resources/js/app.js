@@ -7,21 +7,25 @@ window.addEventListener('load', function () {
     cookieconsent.initialise({
         palette: {
             popup: {
-                background: "#000"
+                background: "#000",
+                text: "#fff"
             },
             button: {
-                background: "#f1d600"
+                background: "#f1d600",
+                text: "#000"
             }
         },
+        position: "bottom",
         theme: "classic",
         content: {
             message: "We use cookies to ensure you get the best experience on our website.",
             dismiss: "Got it!",
             link: "Learn more",
             href: "/privacy-policy",
-            // Add Terms and Conditions link
-            policy: 'Terms and Conditions',
-            policyHref: '/terms-and-conditions'
+            extra_link: {
+                text: "Terms and Conditions",
+                href: "/terms-and-conditions"
+            }
         }
     });
 });

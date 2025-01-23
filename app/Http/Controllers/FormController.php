@@ -3,29 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Anhskohbo\NoCaptcha\Facades\NoCaptcha;
+use Illuminate\Support\Facades\Validator;
 
 class FormController extends Controller
 {
-    // ...existing code...
-
-    public function submit(Request $request)
+    public function showForm()
     {
-        $request->validate([
-            // ...existing validation rules...
-            'g-recaptcha-response' => 'required|captcha',
-        ]);
-
-        // Verify reCAPTCHA
-        $recaptcha = new \ReCaptcha\ReCaptcha('6LeEx74qAAAAAHHsm-VmV_dN-kDIudQbMAmxl0YU');
-        $resp = $recaptcha->verify($request->input('g-recaptcha-response'), $request->ip());
-
-        if (!$resp->isSuccess()) {
-            return back()->withErrors(['captcha' => 'ReCAPTCHA verification failed.']);
-        }
-
-        // ...existing code...
+        return view('form');
     }
 
-    // ...existing code...
+    public function submitForm(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'g-recaptcha-response' => 'required|captcha',
+            // Add other validation rules here
+        ]);
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        // Process form submission
+        // ...existing code...
+
+        return redirect()->back()->with('success', 'Form submitted successfully!');
+    }
 }

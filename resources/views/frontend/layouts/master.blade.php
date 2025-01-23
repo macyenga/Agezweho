@@ -41,6 +41,7 @@
 
     <link href="{{ asset('frontend/asset/css/styles.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     @if(isset($settings))
     <style>
@@ -78,8 +79,8 @@
 
     <footer>
         <div class="footer-terms" style="text-align: center; padding: 20px; background-color: #f8f9fa; border-top: 1px solid #e7e7e7;">
-            <a href="{{ url('/terms') }}" style="color: #007bff; text-decoration: none; margin-right: 15px;">Terms of Service</a> | 
-            <a href="{{ url('/privacy') }}" style="color: #007bff; text-decoration: none; margin-left: 15px;">Privacy Policy</a>
+            <a href="{{ url('/terms-and-conditions') }}" style="color: #007bff; text-decoration: none; margin-right: 15px;">Terms of Service</a> | 
+            <a href="{{ url('/privacy-policy') }}" style="color: #007bff; text-decoration: none; margin-left: 15px;">Privacy Policy</a>
         </div>
     </footer>
 
@@ -179,10 +180,8 @@
 <!-- Cookie Consent -->
 <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.0/build/cookieconsent.min.js"></script>
 <script>
-import cookieconsent from 'cookieconsent';
-
 window.addEventListener('load', function () {
-    cookieconsent.initialise({
+    window.cookieconsent.initialise({
         palette: {
             popup: {
                 background: "#000",
@@ -193,14 +192,13 @@ window.addEventListener('load', function () {
                 text: "#000"
             }
         },
-        position: "bottom", // Moves the banner to the bottom
+        position: "bottom",
         theme: "classic",
         content: {
             message: "We use cookies to ensure you get the best experience on our website.",
             dismiss: "Got it!",
             link: "Learn more",
             href: "/privacy-policy",
-            // Add terms and conditions link
             extra_link: {
                 text: "Terms and Conditions",
                 href: "/terms-and-conditions"
@@ -208,7 +206,6 @@ window.addEventListener('load', function () {
         }
     });
 });
-
 </script>
 
 </body>

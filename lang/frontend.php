@@ -20,7 +20,7 @@ return array (
   'Advertise' => 'Yamamaza',
   'newsletter' => 'Ikinyamakuru',
   'The most important world news and events of the day' => 'Amakuru n\'ibikorwa by\'ingenzi by\'isi by\'umunsi',
-  'Get magzrenvi daily newsletter on your inbox' => 'Akira ikinyamakuru cya magzrenvi buri munsi muri imeyili yawe',
+  'Get agezweho daily newsletter on your inbox' => 'Akira ikinyamakuru cya agezwehoburi munsi muri imeyili yawe',
   'sign up' => 'Iyandikishe',
   'News' => 'Amakuru',
   'By' => 'Na',

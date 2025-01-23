@@ -20,7 +20,7 @@ return array (
   'Advertise' => 'Advertise',
   'newsletter' => 'newsletter',
   'The most important world news and events of the day' => 'The most important world news and events of the day',
-  'Get magzrenvi daily newsletter on your inbox' => 'Get magzrenvi daily newsletter on your inbox',
+  'Get agezweho daily newsletter on your inbox' => 'Get agezweho daily newsletter on your inbox',
   'sign up' => 'sign up',
   'Login' => 'Login',
   'Register' => 'Register',

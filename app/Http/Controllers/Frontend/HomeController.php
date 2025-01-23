@@ -36,8 +36,22 @@ class HomeController extends Controller
             ->orderBy('id', 'DESC')->take(7)
             ->get();
 
-        $recentNews = News::with(['category', 'author'])->activeEntries()->withLocalize()
-            ->orderBy('id', 'DESC')->take(6)->get();
+        try {
+            $recentNews = $this->newsService->getRecentNews(6);
+            if (empty($recentNews)) {
+                \Log::warning('No recent news returned from NewsService');
+                $recentNews = collect();
+            }
+            
+            // Log the first item for debugging
+            if ($recentNews->isNotEmpty()) {
+                \Log::debug('First recent news item: ' . json_encode($recentNews->first()));
+            }
+            
+        } catch (\Exception $e) {
+            \Log::error('Error fetching recent news: ' . $e->getMessage());
+            $recentNews = collect();
+        }
 
         $popularNews = News::with(['category'])->where('show_at_popular', 1)
             ->activeEntries()->withLocalize()

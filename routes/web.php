@@ -4,6 +4,8 @@ use App\Http\Controllers\Frontend\LanguageController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WeatherController;
+use App\Http\Controllers\FootballController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,3 +70,10 @@ Route::get('/privacy-policy', function () {
 Route::get('terms-and-conditions', function () {
     return view('terms-and-conditions');
 })->name('terms-and-conditions');
+
+Route::get('/form', [FormController::class, 'showForm'])->name('form.show');
+Route::post('/form', [FormController::class, 'submitForm'])->name('form.submit');
+
+Route::get('/weather/{city}', [WeatherController::class, 'show'])->name('weather.show');
+
+Route::get('/live-scores', [FootballController::class, 'liveScores']);

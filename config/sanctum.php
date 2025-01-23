@@ -64,4 +64,17 @@ return [
         'encrypt_cookies' => App\Http\Middleware\EncryptCookies::class,
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Secure Cookies
+    |--------------------------------------------------------------------------
+    |
+    | This value determines if Sanctum should use secure cookies. This should
+    | be enabled in production environments to ensure cookies are only sent
+    | over HTTPS connections.
+    |
+    */
+
+    'secure_cookies' => env('SANCTUM_SECURE_COOKIES', true),
+
 ];
