@@ -41,17 +41,7 @@ return [
         'city' => env('OPENWEATHER_DEFAULT_CITY', 'Kigali'),
     ],
 
-    'news_api' => [
-        'key' => env('NEWS_API_KEY'),
-        'min_content_length' => 50,
-        'local_content_ratio' => 0.3,
-        'cache_duration' => 1800,
-        'restricted_keywords' => [
-            'adult', 'gambling', 'betting', 'casino',
-            'violence', 'gore', 'hate', 'racism', 'drugs'
-        ],
-        'attribution_required' => true
-    ],
+    
 
 
 

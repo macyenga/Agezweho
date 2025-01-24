@@ -80,3 +80,7 @@ Route::get('/weather/{city}', [WeatherController::class, 'show'])->name('weather
 
 Route::get('/live-scores', [FootballController::class, 'liveScores']);
 
+Route::get('sitemap.xml', function() {
+    return response()->file(public_path('sitemap.xml'));
+});
+

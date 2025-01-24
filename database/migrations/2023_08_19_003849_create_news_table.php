@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('image');
             $table->string('title');
             $table->text('slug');
-            $table->text('content');
+            $table->longText('content'); // Changed from text to longText
             $table->string('meta_title')->nullable();
             $table->string('meta_description')->nullable();
             $table->boolean('is_breaking_news')->default(0);

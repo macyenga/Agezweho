@@ -42,6 +42,46 @@
     <link href="{{ asset('frontend/asset/css/styles.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css">
+
+    <style>
+        .cc-window.cc-banner {
+            padding: 1em 1.8em;
+            background-color: rgba(0, 0, 0, 0.95) !important;
+        }
+        .cc-btn {
+            border-radius: 4px !important;
+            padding: 0.5em 1.2em !important;
+        }
+        .cc-allow {
+            background-color: #4CAF50 !important;
+            color: white !important;
+        }
+        .cc-deny {
+            background-color: #f44336 !important;
+            color: white !important;
+        }
+        .cc-link {
+            color: #2196F3 !important;
+            padding: 0.2em;
+        }
+        .cc-window {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .cc-btn {
+            border-radius: 4px;
+            min-width: 120px;
+        }
+        .cc-allow {
+            background: #4CAF50 !important;
+            color: white !important;
+        }
+        .cc-deny {
+            background: #f44336 !important;
+            color: white !important;
+        }
+    </style>
 
     @if(isset($settings))
     <style>
@@ -177,40 +217,61 @@
     @stack('content')
     <script src="{{ mix('js/app.js') }}"></script>
 
-<!-- Cookie Consent -->
-<script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.0/build/cookieconsent.min.js"></script>
-<script>
-window.addEventListener('load', function () {
-    window.cookieconsent.initialise({
-        palette: {
-            popup: {
-                background: "#000",
-                text: "#fff"
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js"></script>
+    <script>
+    window.addEventListener('load', function() {
+        window.cookieconsent.initialise({
+            palette: {
+                popup: {
+                    background: '#2b2b2b',
+                    text: '#ffffff'
+                },
+                button: {
+                    background: '#4CAF50'
+                }
             },
-            button: {
-                background: "#f1d600",
-                text: "#000"
+            type: 'opt-in',
+            content: {
+                message: 'This website uses cookies to improve your experience and provide personalized content.',
+                allow: 'Accept cookies',
+                deny: 'Decline',
+                link: 'Learn more',
+                href: '/privacy-policy'
+            },
+            onInitialise: function(status) {
+                var type = this.options.type;
+                var didConsent = this.hasConsented();
+                if (didConsent) {
+                    enableCookies();
+                }
+            },
+            onStatusChange: function(status, chosenBefore) {
+                var type = this.options.type;
+                var didConsent = this.hasConsented();
+                if (didConsent) {
+                    enableCookies();
+                } else {
+                    disableCookies();
+                }
             }
-        },
-        position: "bottom",
-        theme: "classic",
-        content: {
-            message: "We use cookies to ensure you get the best experience on our website.",
-            dismiss: "Got it!",
-            link: "Learn more",
-            href: "/privacy-policy",
-            extra_link: {
-                text: "Terms and Conditions",
-                href: "/terms-and-conditions"
-            }
-        }
+        });
     });
-});
-</script>
+
+    function enableCookies() {
+        window['ga-disable-G-MMMRY6PLJW'] = false;
+        gtag('consent', 'update', {
+            'analytics_storage': 'granted'
+        });
+    }
+
+    function disableCookies() {
+        window['ga-disable-G-MMMRY6PLJW'] = true;
+        gtag('consent', 'update', {
+            'analytics_storage': 'denied'
+        });
+    }
+    </script>
 
 </body>
-</html>
-
-</body>
-
 </html>

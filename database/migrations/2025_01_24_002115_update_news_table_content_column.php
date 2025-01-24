@@ -11,13 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('footer_infos', function (Blueprint $table) {
-            $table->id();
-            $table->text('logo')->nullable();
-            $table->text('description');
-            $table->string('copyright');
-            $table->string('language');
-            $table->timestamps();
+        Schema::table('news', function (Blueprint $table) {
+            $table->longText('content')->change();
         });
     }
 
@@ -26,6 +21,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('footer_infos');
+        Schema::table('news', function (Blueprint $table) {
+            $table->text('content')->change();
+        });
     }
 };
+
